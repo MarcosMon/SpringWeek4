@@ -29,7 +29,10 @@ public class LocalitatOpBasic {
 		entityManager.persist(localitat);
 	}
 	
+	@Transactional
 	public void elimina (long id) {
+		Localitat eliminarLocalitat = this.carrega(id);
+		entityManager.remove(eliminarLocalitat);
 	}
 	
 	public void modifica (Localitat localitat) {
