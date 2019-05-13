@@ -37,7 +37,10 @@ public class LocalitatOpBasic {
 		}
 	}
 
+	@Transactional
 	public void modifica(Localitat localitat) {
+		
+		entityManager.merge(localitat);
 	}
 
 }
