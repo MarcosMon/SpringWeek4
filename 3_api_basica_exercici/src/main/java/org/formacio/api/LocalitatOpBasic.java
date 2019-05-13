@@ -1,5 +1,9 @@
 package org.formacio.api;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,11 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalitatOpBasic {
 	
+	@PersistenceContext
+    private EntityManager entityManager = null;
+	Localitat localitat = new Localitat();
+	
 	public Localitat carrega (long id) {
-		return null;
+		Localitat localitat = entityManager.find(Localitat.class, id);
+        return localitat;
 	}
 	
+	@Transactional
 	public void alta (String nom, Integer habitants) {
+		localitat.setNom(nom);
+		localitat.setHabitants(habitants);
+		entityManager.persist(localitat);
 	}
 	
 	public void elimina (long id) {
