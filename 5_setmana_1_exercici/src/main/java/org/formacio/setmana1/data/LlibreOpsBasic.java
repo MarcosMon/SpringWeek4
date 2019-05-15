@@ -40,7 +40,6 @@ public class LlibreOpsBasic {
 	 */
 	@Transactional
 	public void alta(String isbn, String autor, Integer pagines, Recomanacio recomanacio, String titol) {
-	
 		llibre.setIsbn(isbn);
 		llibre.setAutor(autor);
 		llibre.setPagines(pagines);
@@ -53,9 +52,20 @@ public class LlibreOpsBasic {
 	 * 
 	 * @param isbn del llibre a eliminar
 	 * @return true si s'ha esborrat el llibre, false si no existia
+	 * @throws LlibreNoExisteixException
 	 */
+	@Transactional
 	public boolean elimina(String isbn) {
-		return true;
+		Llibre llibre;
+		try {
+			llibre = this.carrega(isbn);
+			entityManager.remove(llibre);
+			return true;
+		} catch (LlibreNoExisteixException e) {
+
+			return false;
+
+		}
 	}
 
 	/**
