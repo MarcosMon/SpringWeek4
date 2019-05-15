@@ -71,7 +71,11 @@ public class LlibreOpsBasic {
 	/**
 	 * Guarda a bbdd l'estat del llibre indicat
 	 */
+
+	@Transactional
 	public void modifica(Llibre llibre) {
+
+		entityManager.merge(llibre);
 	}
 
 	/**
@@ -79,6 +83,17 @@ public class LlibreOpsBasic {
 	 * (Aquest metode no llanca excepcions!)
 	 */
 	public boolean existeix(String isbn) {
+
+		try {
+			llibre = this.carrega(isbn);
+			if (llibre != null) {
+				return true;
+			}
+
+		} catch (LlibreNoExisteixException e) {
+
+			e.printStackTrace();
+		}
 		return false;
 	}
 
